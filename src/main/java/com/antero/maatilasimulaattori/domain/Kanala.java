@@ -15,12 +15,33 @@ import java.util.Collection;
  */
 public class Kanala extends MaatilanOsa{
 
+    private int kanalanKoko = 5;
     private Collection<Kana> kanat = new <Kana>ArrayList();
     
     public Kanala(String nimi) {
         super(nimi);
     }
+
+    public int munita() {
+        
+        int munienLkm = 0;
+        
+        for(Kana kana:kanat){
+            if(kana.muni()){
+                munienLkm++;
+            }
+        }
+        return munienLkm;
+    }
     
+    public void lisaaKana(Kana kana){
+        if(kanat.size()<kanalanKoko)
+            kanat.add(kana);
+    }
     
-    
+    public void ruokiKanat(){
+        for(Kana kana:kanat){
+            kana.ruoki();
+        }
+    }
 }

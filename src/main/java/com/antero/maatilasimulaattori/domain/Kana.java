@@ -13,7 +13,7 @@ public class Kana extends MaatilanOsa implements Elava {
 
     private boolean nalkainen = true;
 
-    private long munaValmistuu = 60 * 5 * 1000; // millisekuntia
+    private long munaValmistuu = 60 * 1 * 1000; // millisekuntia
 
     private TuotantoAika tuotantoAika;
 

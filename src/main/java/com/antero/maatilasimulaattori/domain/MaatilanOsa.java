@@ -6,6 +6,8 @@
 
 package com.antero.maatilasimulaattori.domain;
 
+import java.util.Objects;
+
 /**
  *
  * @author Antero Oikkonen
@@ -32,6 +34,32 @@ public class MaatilanOsa {
 
     public void setHinta(int hinta) {
         this.hinta = hinta;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.nimi);
+        hash = 71 * hash + this.hinta;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MaatilanOsa other = (MaatilanOsa) obj;
+        if (!Objects.equals(this.nimi, other.nimi)) {
+            return false;
+        }
+        if (this.hinta != other.hinta) {
+            return false;
+        }
+        return true;
     }
     
     

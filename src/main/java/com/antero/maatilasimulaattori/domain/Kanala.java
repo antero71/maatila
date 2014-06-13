@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.antero.maatilasimulaattori.domain;
 
 import java.util.ArrayList;
@@ -13,35 +12,47 @@ import java.util.Collection;
  *
  * @author Antero Oikkonen
  */
-public class Kanala extends MaatilanOsa{
+public class Kanala extends MaatilanOsa {
 
     private int kanalanKoko = 5;
     private Collection<Kana> kanat = new <Kana>ArrayList();
-    
+
     public Kanala(String nimi) {
         super(nimi);
     }
 
     public int munita() {
-        
+
         int munienLkm = 0;
-        
-        for(Kana kana:kanat){
-            if(kana.muni()){
+
+        for (Kana kana : kanat) {
+            if (kana.muni()) {
                 munienLkm++;
             }
         }
         return munienLkm;
     }
-    
-    public void lisaaKana(Kana kana){
-        if(kanat.size()<kanalanKoko)
+
+    public void lisaaKana(Kana kana) {
+        if (kanat.size() < kanalanKoko) {
             kanat.add(kana);
-    }
-    
-    public void ruokiKanat(){
-        for(Kana kana:kanat){
-            kana.ruoki();
         }
     }
+
+    public void ruokiKanat() {
+        for (Kana kana : kanat) {
+            if (kana.isNalkainen()) {
+                kana.ruoki();
+            }
+        }
+    }
+
+    public int montaKanaa() {
+        return kanat.size();
+    }
+
+    public int getKanalanKoko() {
+        return kanalanKoko;
+    }
+
 }

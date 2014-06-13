@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Antero Oikkonen
  */
-public class Peltotilkku extends MaatilanOsa{
+public class Peltotilkku extends MaatilanOsa {
 
     private Viljelykasvi kasvilaatu;
 
@@ -19,6 +19,10 @@ public class Peltotilkku extends MaatilanOsa{
         super(nimi);
     }
 
+    public boolean onkoKylvetty(){
+        return kasvilaatu!=null;
+    }
+    
     public void kylva(Viljelykasvi kasvi) {
         kasvilaatu = kasvi;
         kasvilaatu.setKylvettyAika(System.currentTimeMillis());
@@ -32,4 +36,26 @@ public class Peltotilkku extends MaatilanOsa{
         }
     }
 
+    public Viljelykasvi korjaaSato() {  
+        if (kasvilaatu!=null && kasvilaatu.isValmis()) {
+            Viljelykasvi kasvi = new Viljelykasvi(kasvilaatu.getNimi());
+            kasvilaatu = null;
+            System.out.println("kasvi "+kasvi);
+            return kasvi;
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        
+        if(kasvilaatu!=null){
+            return "pelto kylvetty, kasvi "+kasvilaatu;
+        }else
+            return "pellossa ei kasva mitään";
+        
+        
+    }
+    
+    
 }

@@ -6,6 +6,7 @@
 package com.antero.maatilasimulaattori.domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
 /**
@@ -14,7 +15,6 @@ import java.util.Collection;
  */
 public class TuotantoAika {
 
-  
     private long tuotantoaikaMs = 60 * 10 * 1000; // oletus 10 minuuttia
     private long tuotantoAlkoi = 0; // 0, ei alkanut
 
@@ -51,5 +51,43 @@ public class TuotantoAika {
         }
     }
 
+    /*
+     palauttaa 0:n jos valmis,
+     muutoin sekunnit valmistumiseen
+     */
+    public int mitenPitkaAikaValmistumiseen() {
+        long erotus = System.currentTimeMillis() - tuotantoAlkoi;
 
+        if (erotus > tuotantoaikaMs) {
+            return 0;
+        } else {
+            return (int) ((tuotantoaikaMs-erotus) / 1000);
+        }
+    }
+
+    public String mitenPitkaAikaValmistumiseenKelloAikana(int sekunnit) {
+      
+        int tunnit = sekunnit / 3600;
+        sekunnit = sekunnit - tunnit * 3600;
+        int minuutit = sekunnit / 60;
+        sekunnit = sekunnit - minuutit * 60;
+        int sek = sekunnit;
+
+        String stunnit = "" + tunnit;
+        String sminuutit = "" + minuutit;
+        String ssek = "" + sek;
+        
+        if (tunnit < 10) {
+            stunnit = "0" + stunnit;
+        }
+        if (minuutit < 10) {
+            sminuutit = "0" + sminuutit;
+        }
+
+        if (sek < 10) {
+            ssek = "0" + ssek;
+        }
+        return stunnit + ":" + sminuutit + ":" + ssek;
+
+    }
 }

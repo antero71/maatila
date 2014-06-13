@@ -12,21 +12,31 @@ import java.util.Collection;
  *
  * @author Antero Oikkonen
  */
-public class Varasto {
+public class Varasto extends MaatilanOsa{
 
-    private Collection<Varastoitava> tuotteet = new ArrayList<Varastoitava>();
+    private final Collection<Varastoitava> tuotteet = new ArrayList<>();
 
     private int tilavuus = 1; // oletustilavuus 1
 
     public Varasto(int tilavuus) {
+        super("Varasto");
         this.tilavuus = tilavuus;
     }
 
+    public boolean mahtuuko(int koko){
+        int varastonkoko=0;
+        for(Varastoitava tuote:tuotteet){
+            varastonkoko+=tuote.getKoko();
+        }
+        return tilavuus>=(koko+varastonkoko);
+    }
+    
+    
     public void addTuote(Varastoitava tuote) throws IllegalArgumentException {
-        if (tilavuus >= tuotteet.size() + 1) {
-            tuotteet.add(tuote);
+        if (mahtuuko(tuote.getKoko())) {
+            boolean add = tuotteet.add(tuote);
         } else {
-            throw new IllegalArgumentException("Varastoon ei mahdu tuotteita");
+            throw new IllegalArgumentException("Varastoon ei mahdu tuotetta jonka koko on "+tuote.getKoko());
         }
     }
 
@@ -41,5 +51,18 @@ public class Varasto {
     public void setTilavuus(int tilavuus) {
         this.tilavuus = tilavuus;
     }
+
+    @Override
+    public String toString() {
+        String tuot = "Varastossa:\n";
+        
+        for(Varastoitava tuote:tuotteet){
+            tuot += "Nimi: "+tuote.getNimi()+", hinta: "+tuote.getHinta()+"\n";
+        }
+        
+        return tuot;
+    }
+    
+    
 
 }

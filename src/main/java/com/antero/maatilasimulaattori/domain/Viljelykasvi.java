@@ -3,43 +3,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.antero.maatilasimulaattori.domain;
 
 /**
  *
  * @author Antero Oikkonen
  */
-public class Viljelykasvi extends MaatilanOsa{
-    
-    private String nimi;
+public class Viljelykasvi extends MaatilanOsa implements Varastoitava {
+
     private TuotantoAika tuotantoAika;
-    private int hinta; // hinta / yksikko, peltotilkku tuottaa 
-                       // kaksi yksikköä yhden kylvöllä
 
     public Viljelykasvi(String nimi) {
         super(nimi);
-        tuotantoAika=new TuotantoAika();
+        tuotantoAika = new TuotantoAika();
     }
 
     public Viljelykasvi(String nimi, int kasvuAikaSek) {
         super(nimi);
-        tuotantoAika=new TuotantoAika(kasvuAikaSek*1000);
+        tuotantoAika = new TuotantoAika(kasvuAikaSek * 1000);
     }
-    
+
+    public Viljelykasvi(Kasvi kasvi) {
+        super(kasvi.getNimi());
+        tuotantoAika = new TuotantoAika(kasvi.getKasvuaikaMinuuttia() * 1000);
+    }
+
     public void setKylvettyAika(long kylvetty) {
         tuotantoAika.aloitaTuotanto(kylvetty);
     }
-    
-    public boolean isValmis(){
-      if(!tuotantoAika.isTuotantoAloitettu()){
-          return false;
-      }
-      
-      if(tuotantoAika.isTaynna()){
-          tuotantoAika.nollaa();
-          return true;
-      }
-      return false;
+
+    public boolean isValmis() {
+        if (!tuotantoAika.isTuotantoAloitettu()) {
+            return false;
+        }
+
+        if (tuotantoAika.isTaynna()) {
+            //tuotantoAika.nollaa();
+            return true;
+        }
+        return false;
     }
+
+    @Override
+    public int getKoko() {
+        return 1;
+    }
+
+    @Override
+    public String toString() {
+    
+        return getNimi()+" aikaa valmistumiseen ("+this.tuotantoAika.mitenPitkaAikaValmistumiseenKelloAikana(tuotantoAika.mitenPitkaAikaValmistumiseen())+")";
+        
+       
+    }
+    
+    
+
 }

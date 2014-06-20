@@ -22,6 +22,8 @@ public class TuotantoAika {
     }
 
     public TuotantoAika(long tayttoaika) {
+        if(tayttoaika < 0)
+            throw new IllegalArgumentException("Aika ei voi olla negatiivinen");
         tuotantoaikaMs = tayttoaika;
     }
 
@@ -30,10 +32,12 @@ public class TuotantoAika {
     }
 
     public void aloitaTuotanto(long currentTimeMs) {
+        if(currentTimeMs < (System.currentTimeMillis()-2000))
+            throw new IllegalArgumentException("aloitusaika täytyy olla enintään 2 sekuntia aikaisempi kuin nykyhetki");
         tuotantoAlkoi = currentTimeMs;
     }
 
-    public boolean isTaynna() {
+    public boolean isValmis() {
         if (tuotantoAlkoi == 0) {
             return false;
         }
@@ -46,7 +50,7 @@ public class TuotantoAika {
     }
 
     public void nollaa() {
-        if (isTaynna()) {
+        if (isValmis()) {
             tuotantoAlkoi = 0;
         }
     }
@@ -67,6 +71,8 @@ public class TuotantoAika {
 
     public String mitenPitkaAikaValmistumiseenKelloAikana(int sekunnit) {
       
+        if(sekunnit<0)
+            throw new IllegalArgumentException("sekunnit eivät voi olla negatiivisia");
         int tunnit = sekunnit / 3600;
         sekunnit = sekunnit - tunnit * 3600;
         int minuutit = sekunnit / 60;

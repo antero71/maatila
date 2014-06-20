@@ -7,36 +7,63 @@ package com.antero.maatilasimulaattori.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  *
  * @author Antero Oikkonen
  */
-public class Varasto extends MaatilanOsa{
+public class Varasto extends MaatilanOsa {
 
     private final Collection<Varastoitava> tuotteet = new ArrayList<>();
 
-    private int tilavuus = 1; // oletustilavuus 1
+    private int tilavuus = 50; // oletustilavuus
 
     public Varasto(int tilavuus) {
         super("Varasto");
         this.tilavuus = tilavuus;
     }
 
-    public boolean mahtuuko(int koko){
-        int varastonkoko=0;
-        for(Varastoitava tuote:tuotteet){
-            varastonkoko+=tuote.getKoko();
+    /**
+     * palauttaa <code>Valmistusaineet</code> jos kaikki aineet löytyy muuten
+     * null
+     *
+     */
+    public Valmistusaineet annaValmistusaineet(Valmistusaineet aineet) {
+
+        Collection<Varastoitava> haettavat = aineet.getAineet();
+        Collection<Varastoitava> palautettavat = null;
+        if (tuotteet.containsAll(haettavat)) {
+            palautettavat = new ArrayList();
+            palautettavat.addAll(haettavat);
+            Iterator<Varastoitava> iter = haettavat.iterator();
+            while (iter.hasNext()) {
+                tuotteet.remove(iter.next());
+            }
         }
-        return tilavuus>=(koko+varastonkoko);
+
+        Valmistusaineet palAineet = null;
+        if (palautettavat != null) {
+            palAineet = new Valmistusaineet(aineet.getNimi());
+            palAineet.lisaaAineet(palautettavat);
+        }
+        return palAineet;
+
     }
-    
-    
+
+    public boolean mahtuuko(int koko) {
+        int varastonkoko = 0;
+        for (Varastoitava tuote : tuotteet) {
+            varastonkoko += tuote.getKoko();
+        }
+        return tilavuus >= (koko + varastonkoko);
+    }
+
     public void addTuote(Varastoitava tuote) throws IllegalArgumentException {
         if (mahtuuko(tuote.getKoko())) {
             boolean add = tuotteet.add(tuote);
         } else {
-            throw new IllegalArgumentException("Varastoon ei mahdu tuotetta jonka koko on "+tuote.getKoko());
+            throw new IllegalArgumentException("Varastoon ei mahdu tuotetta jonka koko on " + tuote.getKoko());
         }
     }
 
@@ -44,6 +71,11 @@ public class Varasto extends MaatilanOsa{
         return tuotteet;
     }
 
+    /**
+     * palauttaa varaston tilavuuden
+     *
+     * @return
+     */
     public int getTilavuus() {
         return tilavuus;
     }
@@ -55,14 +87,11 @@ public class Varasto extends MaatilanOsa{
     @Override
     public String toString() {
         String tuot = "Varastossa:\n";
-        
-        for(Varastoitava tuote:tuotteet){
-            tuot += "Nimi: "+tuote.getNimi()+", hinta: "+tuote.getHinta()+"\n";
+
+        for (Varastoitava tuote : tuotteet) {
+            tuot += "Nimi: " + tuote.getNimi() + ", hinta: " + tuote.getHinta() + "\n";
         }
-        
+
         return tuot;
     }
-    
-    
-
 }

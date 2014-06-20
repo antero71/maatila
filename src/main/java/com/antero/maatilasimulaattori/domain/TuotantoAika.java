@@ -28,12 +28,12 @@ public class TuotantoAika {
     }
 
     public boolean isTuotantoAloitettu() {
-        return tuotantoAlkoi != 0;
+        return tuotantoAlkoi > 0;
     }
 
     public void aloitaTuotanto(long currentTimeMs) {
         if(currentTimeMs < (System.currentTimeMillis()-2000))
-            throw new IllegalArgumentException("aloitusaika täytyy olla enintään 2 sekuntia aikaisempi kuin nykyhetki");
+            throw new IllegalArgumentException("aloitusaika saa olla enintään 2 sekuntia aikaisempi kuin nykyhetki");
         tuotantoAlkoi = currentTimeMs;
     }
 

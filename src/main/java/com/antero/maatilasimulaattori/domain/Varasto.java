@@ -25,9 +25,8 @@ public class Varasto extends MaatilanOsa {
     }
 
     /**
-     * palauttaa <code>Valmistusaineet</code> jos kaikki aineet löytyy muuten
-     * null
-     *
+     * palauttaa <code>Valmistusaineet</code> jos kaikki aineet löytyy ja 
+     * poistaa ne varastosta. muuten palauttaa null
      */
     public Valmistusaineet annaValmistusaineet(Valmistusaineet aineet) {
 
@@ -52,16 +51,13 @@ public class Varasto extends MaatilanOsa {
     }
 
     public boolean mahtuuko(int koko) {
-        int varastonkoko = 0;
-        for (Varastoitava tuote : tuotteet) {
-            varastonkoko += tuote.getKoko();
-        }
-        return tilavuus >= (koko + varastonkoko);
+
+        return tilavuus >= (koko + this.getKoko());
     }
 
     public void addTuote(Varastoitava tuote) throws IllegalArgumentException {
         if (mahtuuko(tuote.getKoko())) {
-            boolean add = tuotteet.add(tuote);
+            tuotteet.add(tuote);
         } else {
             throw new IllegalArgumentException("Varastoon ei mahdu tuotetta jonka koko on " + tuote.getKoko());
         }
@@ -93,5 +89,13 @@ public class Varasto extends MaatilanOsa {
         }
 
         return tuot;
+    }
+
+    public int getKoko() {
+        int varastonkoko = 0;
+        for (Varastoitava tuote : tuotteet) {
+            varastonkoko += tuote.getKoko();
+        }
+        return varastonkoko;
     }
 }

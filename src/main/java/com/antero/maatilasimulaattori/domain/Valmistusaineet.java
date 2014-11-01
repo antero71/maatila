@@ -16,10 +16,22 @@ public class Valmistusaineet extends MaatilanOsa implements Varastoitava {
 
     private Collection<Varastoitava> valmistusaineet = new ArrayList();
 
+    private String tuotteenNimi;
+    
     public Valmistusaineet(String nimi) {
-        super(nimi);
+        super(nimi+": valmistusaineet");
     }
 
+    public String getTuotteenNimi() {
+        return tuotteenNimi;
+    }
+
+    public void setTuotteenNimi(String tuotteenNimi) {
+        this.tuotteenNimi = tuotteenNimi;
+    }
+
+    
+    
     @Override
     public int getHinta() {
         int hinta = 0;
@@ -31,6 +43,12 @@ public class Valmistusaineet extends MaatilanOsa implements Varastoitava {
 
     public void lisaaAine(Varastoitava tuote) {
         valmistusaineet.add(tuote);
+    }
+    
+    public void lisaaAineet(Varastoitava tuote, int maara){
+        for(int i = 0; i < maara;i++){
+            lisaaAine(tuote);
+        }
     }
 
     @Override
@@ -68,13 +86,24 @@ public class Valmistusaineet extends MaatilanOsa implements Varastoitava {
     public String toString() {
 
         StringBuffer s = new StringBuffer(getNimi());
-        s.append("\nAineet:");
         for (Varastoitava aine : valmistusaineet) {
-            s.append("\n");
+            s.append("\n - ");
             s.append(aine.getNimi());
         }
 
         return s.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }

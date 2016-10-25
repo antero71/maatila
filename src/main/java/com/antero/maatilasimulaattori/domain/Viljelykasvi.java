@@ -25,7 +25,7 @@ public class Viljelykasvi extends MaatilanOsa implements Varastoitava {
 
     public Viljelykasvi(Kasvi kasvi) {
         super(kasvi.getNimi());
-        tuotantoAika = new TuotantoAika(kasvi.getKasvuaikaMinuuttia() * 1000);
+        tuotantoAika = new TuotantoAika(kasvi.getKasvuaikaSekuntia() * 1000);
     }
 
     public void setKylvettyAika(long kylvetty) {
@@ -37,7 +37,7 @@ public class Viljelykasvi extends MaatilanOsa implements Varastoitava {
             return false;
         }
 
-        if (tuotantoAika.isTaynna()) {
+        if (tuotantoAika.isValmis()) {
             //tuotantoAika.nollaa();
             return true;
         }

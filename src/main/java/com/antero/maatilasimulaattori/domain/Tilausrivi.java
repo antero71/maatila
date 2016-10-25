@@ -10,6 +10,8 @@ package com.antero.maatilasimulaattori.domain;
  *
  * @author Antero Oikkonen
  */
-class Tilausrivi {
+public class Tilausrivi {
+    private Varastoitava tuote;
+    
     
 }

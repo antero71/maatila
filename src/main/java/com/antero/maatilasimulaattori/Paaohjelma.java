@@ -8,7 +8,6 @@ package com.antero.maatilasimulaattori;
 
 import com.antero.maatilasimulaattori.ui.Kayttoliittyma;
 import java.util.Scanner;
-
 /**
  *
  * @author Antero Oikkonen

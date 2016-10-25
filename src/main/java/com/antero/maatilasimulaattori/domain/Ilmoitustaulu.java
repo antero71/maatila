@@ -10,6 +10,6 @@ package com.antero.maatilasimulaattori.domain;
  *
  * @author Antero Oikkonen
  */
-public class Tilaukset {
+public class Ilmoitustaulu {
     
 }

@@ -5,6 +5,8 @@
  */
 
 import com.antero.maatilasimulaattori.domain.TuotantoAika;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +14,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 
 /**
  *
@@ -24,13 +27,7 @@ public class TuotantoAikaTest {
     public TuotantoAikaTest() {
     }
 
-    @BeforeClass
-    public static void setUpClass() {
-    }
 
-    @AfterClass
-    public static void tearDownClass() {
-    }
 
     @Before
     public void setUp() {
@@ -56,4 +53,66 @@ public class TuotantoAikaTest {
         
     }
 
+    @Test
+    public void testaaOnkoTuotantoAloitettuJosSitaEiOleAloitettu(){
+        assertFalse(tuotantoAika.isTuotantoAloitettu());
+        
+    }
+    
+    @Test
+    public void testaaOnkoTuotantoValmisJosEiAloitettu(){
+        assertFalse(tuotantoAika.isValmis());
+    }
+    
+    @Test
+    public void testaaOnkoTuotantoAloitettuJosSeOnAloitettu(){
+        tuotantoAika.aloitaTuotanto(System.currentTimeMillis());
+        assertTrue(tuotantoAika.isTuotantoAloitettu());
+    }
+    
+    @Test
+    public void testaaOnkoValmisJosEiValmis(){
+        tuotantoAika.aloitaTuotanto(System.currentTimeMillis());
+        assertFalse(tuotantoAika.isValmis());
+    }
+    
+    @Test
+    public void testaaOnkoValmisJosValmis(){
+        tuotantoAika = new TuotantoAika(1000L);
+        tuotantoAika.aloitaTuotanto(System.currentTimeMillis());
+        try {
+            Thread.sleep(1100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TuotantoAikaTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertTrue(tuotantoAika.isValmis());
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void aloitaTuontantoAikaEiValidi(){
+        tuotantoAika.aloitaTuotanto(100);
+    }
+    
+    @Test
+    public void testaaAikaValmistumiseenKunValmis(){
+        tuotantoAika = new TuotantoAika(500L);
+        try {
+            Thread.sleep(550L);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TuotantoAikaTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        assertEquals(0, tuotantoAika.mitenPitkaAikaValmistumiseen());
+    }
+    
+    @Test
+    public void testaaAikaValmistumiseenKunEiValmis(){
+        tuotantoAika = new TuotantoAika(5000L);
+          try {
+            Thread.sleep(1000L);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(TuotantoAikaTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          int aika = tuotantoAika.mitenPitkaAikaValmistumiseen();
+          assertTrue(aika < 4100 && aika > 3900);
+    }
 }

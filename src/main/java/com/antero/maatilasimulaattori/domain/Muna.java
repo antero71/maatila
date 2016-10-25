@@ -14,6 +14,7 @@ public class Muna extends MaatilanOsa implements Varastoitava {
 
     public Muna(String nimi) {
         super(nimi);
+        setHinta(10);
     }
 
     @Override

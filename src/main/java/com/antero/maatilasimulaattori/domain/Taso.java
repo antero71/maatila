@@ -5,6 +5,8 @@
  */
 package com.antero.maatilasimulaattori.domain;
 
+import java.util.Random;
+
 /**
  *
  * @author Antero Oikkonen
@@ -14,6 +16,8 @@ public class Taso {
     private int taso;
     private int pisteet;
     private int montaPeltotilkkua;
+    private int montaPistettaSeuraavalleTasolle;
+    private Random r = new Random();
 
     public Taso(int taso) {
         this.taso = taso;
@@ -42,5 +46,14 @@ public class Taso {
     public String toString() {
         return "Taso: "+taso+", pisteet: "+pisteet;
     }
- 
+
+    /**
+     * lisää pisteitä 1-i määrän
+     * @param maxMaara 
+     */
+    
+    public void lisaaMaxPisteita(int maxMaara) {
+        pisteet += r.nextInt(maxMaara)+1;
+    }
+    
 }

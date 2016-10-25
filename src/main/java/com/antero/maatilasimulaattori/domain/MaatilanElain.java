@@ -44,13 +44,16 @@ public class MaatilanElain extends MaatilanOsa implements Elava {
     
     public boolean tuota() {
         if (!tuotantoAika.isTuotantoAloitettu()) {
+            System.out.println("tuotantoa ei ole aloitettu, palautuu false");
             return false;
         }
-        if (tuotantoAika.isTaynna()) {
+        if (tuotantoAika.isValmis()) {
             tuotantoAika.nollaa();
             nalkainen = true;
+            System.out.println("tuotento valmis, palautuu true");
             return true;
         } else {
+            System.out.println("Tuotanto ei ole valmis, aika valmistumiseen "+tuotantoAika.mitenPitkaAikaValmistumiseen()+" sekuntia");
             return false;
         }
     }

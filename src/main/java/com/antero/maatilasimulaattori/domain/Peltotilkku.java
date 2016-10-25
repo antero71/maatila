@@ -11,19 +11,20 @@ import java.util.Date;
  *
  * @author Antero Oikkonen
  */
-public class Peltotilkku extends MaatilanOsa {
+public class Peltotilkku extends MaatilanOsa implements Varastoitava{
 
-    private Viljelykasvi kasvilaatu;
+    //private Viljelykasvi kasvilaatu;
+    private Kasvi kasvilaatu;
 
     public Peltotilkku(String nimi) {
         super(nimi);
     }
 
-    public boolean onkoKylvetty(){
-        return kasvilaatu!=null;
+    public boolean onkoKylvetty() {
+        return kasvilaatu != null;
     }
-    
-    public void kylva(Viljelykasvi kasvi) {
+
+    public void kylva(Kasvi kasvi) {
         kasvilaatu = kasvi;
         kasvilaatu.setKylvettyAika(System.currentTimeMillis());
     }
@@ -36,11 +37,11 @@ public class Peltotilkku extends MaatilanOsa {
         }
     }
 
-    public Viljelykasvi korjaaSato() {  
-        if (kasvilaatu!=null && kasvilaatu.isValmis()) {
-            Viljelykasvi kasvi = new Viljelykasvi(kasvilaatu.getNimi());
+    public Kasvi korjaaSato() {
+        if (kasvilaatu != null && kasvilaatu.isValmis()) {
+            Kasvi kasvi = kasvilaatu;
             kasvilaatu = null;
-            System.out.println("kasvi "+kasvi);
+            System.out.println("kasvi " + kasvi);
             return kasvi;
         }
         return null;
@@ -48,14 +49,18 @@ public class Peltotilkku extends MaatilanOsa {
 
     @Override
     public String toString() {
-        
-        if(kasvilaatu!=null){
-            return "pelto kylvetty, kasvi "+kasvilaatu;
-        }else
+
+        if (kasvilaatu != null) {
+            return "pelto kylvetty, kasvi " + kasvilaatu+ ",aikaa valmistumiseen "+kasvilaatu.getAikaValmistumiseen();
+        } else {
             return "pellossa ei kasva mitään";
-        
-        
+        }
+
     }
-    
-    
+
+    @Override
+    public int getKoko() {
+        return 1;
+    }
+
 }

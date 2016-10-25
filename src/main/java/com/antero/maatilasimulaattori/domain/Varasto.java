@@ -44,7 +44,7 @@ public class Varasto extends MaatilanOsa {
 
         Valmistusaineet palAineet = null;
         if (palautettavat != null) {
-            palAineet = new Valmistusaineet(aineet.getNimi());
+            palAineet = new Valmistusaineet(aineet.getTuotteenNimi());
             palAineet.lisaaAineet(palautettavat);
         }
         return palAineet;
@@ -131,23 +131,15 @@ public class Varasto extends MaatilanOsa {
         if (tuote == null || rahaa < 1) {
             throw new IllegalArgumentException("Tuote ei saa olla null ja rahamäärän pitää olla suurempi kuin 0");
         }
+        
+        if(tuotteet.contains(tuote)){
+            int index = tuotteet.indexOf(tuote);
+            Varastoitava t = tuotteet.get(index);
+            if(t.getHinta()<=rahaa){
 
-        Iterator<Varastoitava> iter = tuotteet.iterator();
-
-        Varastoitava t = null;
-
-        Varastoitava loytyi = null;
-
-        while (iter.hasNext()) {
-            t = iter.next();
-            if (t.getClass() == tuote.getClass()) {
-                loytyi = t;
-                break;
+                tuotteet.remove(tuote);
+                return t;
             }
-        }
-        if (loytyi != null) {
-            tuotteet.remove(loytyi);
-            return t;
         }
 
         return null;

@@ -40,7 +40,6 @@ public class MaatilanOsa {
     public int hashCode() {
         int hash = 3;
         hash = 71 * hash + Objects.hashCode(this.nimi);
-        hash = 71 * hash + this.hinta;
         return hash;
     }
 
@@ -54,9 +53,6 @@ public class MaatilanOsa {
         }
         final MaatilanOsa other = (MaatilanOsa) obj;
         if (!Objects.equals(this.nimi, other.nimi)) {
-            return false;
-        }
-        if (this.hinta != other.hinta) {
             return false;
         }
         return true;

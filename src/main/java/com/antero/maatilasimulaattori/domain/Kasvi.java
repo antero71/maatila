@@ -66,4 +66,11 @@ public enum Kasvi implements Varastoitava {
     public void setKylvettyAika(long kylvetty) {
         tuotantoAika.aloitaTuotanto(kylvetty);
     } 
+    
+    public int getAikaValmistumiseen(){
+        if(tuotantoAika.isValmis())
+            return 0;
+        
+        return tuotantoAika.mitenPitkaAikaValmistumiseen();
+    }
 }

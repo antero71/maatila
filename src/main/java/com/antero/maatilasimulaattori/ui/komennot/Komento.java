@@ -4,15 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.antero.maatilasimulaattori.domain;
+package com.antero.maatilasimulaattori.ui.komennot;
 
 /**
  *
  * @author Antero Oikkonen
  */
-interface Elava {
-    boolean isNalkainen();
-    void ruoki();
-    
-    
+public interface Komento {
+    void suorita();
+    String tulosta();
 }

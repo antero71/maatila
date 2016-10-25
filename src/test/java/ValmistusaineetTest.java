@@ -85,5 +85,12 @@ public class ValmistusaineetTest {
         assertEquals(maaraAluksi + 1, aineet.getMaara());
 
     }
+    
+    @Test
+    public void lisaaAineet1(){
+        aineet.lisaaAineet(Kasvi.MAISSI, 3);
+        
+        Assert.assertEquals(5, aineet.getMaara());
+    }
 
 }

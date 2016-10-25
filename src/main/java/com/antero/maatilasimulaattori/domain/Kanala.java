@@ -37,6 +37,7 @@ public class Kanala extends MaatilanOsa implements Varastoitava {
     public void lisaaKana(Kana kana) {
         if (kanat.size() < kanalanKoko) {
             kanat.add(kana);
+            System.out.println("kana lisätty kanalaan");
         }
     }
 
@@ -44,6 +45,7 @@ public class Kanala extends MaatilanOsa implements Varastoitava {
         for (Kana kana : kanat) {
             if (kana.isNalkainen()) {
                 kana.ruoki();
+                System.out.println("Kana ruokittu");
             }
         }
     }
